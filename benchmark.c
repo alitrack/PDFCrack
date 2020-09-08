@@ -30,6 +30,11 @@
 #include "sha256.h"
 #include "pdfcrack.h"
 
+#ifdef __WIN32__
+  #include <windows.h>
+  #define	SIGALRM	14	/* alarm clock */
+#endif 
+
 #define COMMON_MD5_SIZE 88
 #define COMMON_SHA256_SIZE 40
 #define COMMON_SHA256_SLOW_SIZE 56
@@ -309,11 +314,15 @@ pdf_40b_bench(void) {
 
 void
 runBenchmark(void) {
-  struct sigaction act;
-  act.sa_handler = interruptBench;
-  sigemptyset(&act.sa_mask);
-  act.sa_flags = 0;
-  sigaction(SIGALRM, &act, 0);
+ #ifndef __WIN32__
+    struct sigaction act2;
+    act2.sa_handler = interruptBench;
+    sigfillset(&act2.sa_mask);
+    act2.sa_flags = 0;
+    sigaction(SIGALRM, &act2, 0);
+  #else
+      signal(SIGALRM, interruptBench);
+  #endif
 
   printf("Benchmark:\tAverage Speed (calls / second):\n");
   sha256_bench();

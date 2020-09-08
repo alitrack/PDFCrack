@@ -28,6 +28,12 @@
 #include "pdfcrack.h"
 #include "benchmark.h"
 
+#ifdef __WIN32__
+  #include <windows.h>
+  #define	SIGALRM	14	/* alarm clock */
+#endif 
+
+
 #define PRINTERVAL 20 /** Print Progress Interval (seconds) */
 #define CRASHFILE "savedstate.sav"
 #define VERSION_MAJOR 0
@@ -85,7 +91,10 @@ printHelp(char *progname) {
 int
 main(int argc, char** argv) {
   int ret = 0, minpw = 0, maxpw = 32;
-  struct sigaction act1, act2;
+
+  #ifndef __WIN32__
+    struct sigaction act1, act2;
+  #endif
   FILE *file = NULL, *wordlist = NULL;
   bool recovery = false, quiet = false, 
     work_with_user = true, permutation = false;
@@ -286,19 +295,29 @@ main(int argc, char** argv) {
     }
   }
 
+#ifndef __WIN32__
   act2.sa_handler = autoSave;
   sigfillset(&act2.sa_mask);
   act2.sa_flags = 0;
   sigaction(SIGINT, &act2, 0);
+#else
+    signal(SIGINT, autoSave);
+#endif
 
   if(!quiet) {
     printEncData(e);
+#ifndef __WIN32__
     act1.sa_handler = alarmInterrupt;
     sigemptyset(&act1.sa_mask);
     act1.sa_flags = 0;
     sigaction(SIGALRM, &act1, 0);
-    alarm(PRINTERVAL);
+#else
+    signal(SIGALRM, alarmInterrupt);
+    
+#endif
+  alarm(PRINTERVAL);
   }
+
 
   /** Try to initialize the cracking-engine */
   if(!initPDFCrack(e, userpassword, work_with_user, wordlistfile,

@@ -693,7 +693,12 @@ initPDFCrack(const EncData *e, const uint8_t *upw, const bool user,
 static const char string_PRVPL[] = 
   "PDF: %d.%d\nR: %d\nV: %d\nP: %d\nL: %d\n"
   "MetaData: %d\nFileID(%d):";
-static const char string_FILTER[] = "\nFilter(%zu): ";
+#ifndef __WIN32__
+  static const char string_FILTER[] = "\nFilter(%zu): ";
+#else
+  static const char string_FILTER[] = "\nFilter(%u): ";
+#endif
+
 static const char string_UUPWP[] = 
   "\nUser: %d\nUserPw: %d\nPermutate: %d\n";
 
