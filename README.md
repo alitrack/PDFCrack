@@ -8,9 +8,29 @@ PDFCrack is a GNU/Linux (other POSIX-compatible systems should work too) tool fo
 ### Features
 
 - Supports the standard security handler (revision 2, 3 and 4) on all known PDF-versions
-- Supports cracking both owner and userpasswords
-- Both wordlists and bruteforcing the password is supported
+- Supports cracking both owner and user passwords
+- Both wordlists and brute forcing the password is supported
 - Simple permutations (currently only trying first character as Upper Case)
 - Save/Load a running job
 - Simple benchmarking
-- Optimised search for owner-password when user-password is known
+- Optimize search for owner-password when user-password is known
+
+
+## Compile
+
+### Linux or macOS
+
+```
+make
+```
+
+### Windows
+```
+ __WIN32__=1 make
+```
+
+## Usage
+
+```
+$ pdfcrack --help
+```
