@@ -37,7 +37,6 @@ PDFCrack served its purpose, but the landscape has moved on:
 | **[John the Ripper](https://github.com/openwall/john)** | C | 10k+ | GPU support via OpenCL, broad format support |
 
 ### For PDF encryption/decryption as a library:
-- **[oxide-pdf](https://github.com/alitrack/oxide-pdf)** (Rust) — PDF toolkit monorepo, encryption support planned
 - **[qpdf](https://github.com/qpdf/qpdf)** (C++) — battle-tested PDF transformation library
 
 ### For simply removing known-password protection:
