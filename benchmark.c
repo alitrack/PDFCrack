@@ -45,7 +45,8 @@ static volatile bool finished = false;
 
 /** interruptBench is used to stop the current benchmark */
 static void
-interruptBench() {
+interruptBench(int signo) {
+  (void)signo;
   finished = true;
 }
 

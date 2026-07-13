@@ -43,7 +43,8 @@
 
 /** alarmInterrupt is used to print out the progress at specific intervals */
 static void
-alarmInterrupt() {
+alarmInterrupt(int signo) {
+  (void)signo;
   if(!printProgress())
     alarm(PRINTERVAL);
 }

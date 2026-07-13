@@ -47,7 +47,7 @@
 #define CC 0x98badcfe
 #define DD 0x10325476
 
-static void (*md5_50_variant)();
+static void (*md5_50_variant)(uint8_t *msg, const unsigned int msgLen);
 static void md5_50f(uint8_t *msg, const unsigned int msgLen);
 static void md5_50s(uint8_t *msg, const unsigned int msgLen);
 
